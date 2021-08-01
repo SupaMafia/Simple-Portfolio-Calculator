@@ -17,4 +17,4 @@ To run the Java program through Command Prompt under windows in gernal: https://
 
 An [Indices.txt] is provided for testing and debuging purpose. 
 
-Result interpretation: Maximum Sharpe-Ratio Portfolio suggests ratio for highest excess return. Minimum Variance Portfolio suggests a ratio for lower risk. 
+Result interpretation: Maximum Sharpe-Ratio Portfolio suggests a ratio for highest excess return. Minimum Variance Portfolio suggests a ratio for lower risk. 
