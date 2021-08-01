@@ -7,4 +7,10 @@ Format for input is [rank indexA indexB].
 
 You need to Rank the indices from the newest date to the latest date with the newest data on the first line.
 
-Note: It is best practice to remove blank lines after data.
+Blank lines after data need to removed.
+
+The [indices.txt] needs to be at the same folder as [SimplePortfolioCalculator.java] file
+
+Result interpretation: Maximum Sharpe-Ratio Portfolio suggests ratio for highest excess return. Minimum Variance Portfolio suggests a ratio for lower risk. 
+
+To run the Java program through Command Prompt under windows in gernal: https://www.baeldung.com/java-lang-unsupportedclassversion.
