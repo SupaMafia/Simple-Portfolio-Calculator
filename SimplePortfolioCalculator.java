@@ -123,7 +123,7 @@ public class SimplePortfolioCalculator {
         //Calculate sharpe ratio A and B
         double sharpeA = meanExcessReturnA / stdDevA;
         double sharpeB = meanExcessReturnB / stdDevB;
-        System.out.println("Sharpe ratio of A =" + sharpeA + "Sharpe ratio of B =" + sharpeB);
+        System.out.println("Sharpe ratio of A =" + sharpeA + " Sharpe ratio of B =" + sharpeB);
 
         //Calculate covariance of Daily Excess Return of A and B
         double pod; //product of difference
