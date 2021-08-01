@@ -10,7 +10,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /*
- * A program that calculates optimum portfolio for either maximizing return or minimizing risk
+ * A program that calculates optimum portfolio for either maximizing return or minimizing risk. A simple implementation of Modern portfolio theory. 
  */
 
 public class SimplePortfolioCalculator {
