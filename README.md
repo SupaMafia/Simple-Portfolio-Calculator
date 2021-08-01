@@ -11,7 +11,7 @@ Blank lines after data need to removed.
 
 The [indices.txt] needs to be at the same folder as [SimplePortfolioCalculator.java] file
 
-OBS! Computer Resgion Setting needs to be [ English (United States) ]. 
+OBS! Computer Resgion Setting preferably to be [ English (United States) ] since under certain region setting computer would read "," instead of "." causing an InputMismatchException. 
 
 Result interpretation: Maximum Sharpe-Ratio Portfolio suggests ratio for highest excess return. Minimum Variance Portfolio suggests a ratio for lower risk. 
 
