@@ -11,6 +11,8 @@ Blank lines after data need to removed.
 
 The [indices.txt] needs to be at the same folder as [SimplePortfolioCalculator.java] file
 
+OBS! Computer Resgion Setting needs to be [ English (United States) ]. 
+
 Result interpretation: Maximum Sharpe-Ratio Portfolio suggests ratio for highest excess return. Minimum Variance Portfolio suggests a ratio for lower risk. 
 
 To run the Java program through Command Prompt under windows in gernal: https://www.baeldung.com/java-lang-unsupportedclassversion.
