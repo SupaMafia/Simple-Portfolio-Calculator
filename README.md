@@ -8,6 +8,8 @@ Format for input is [rank indexA indexB].
 
 You need to rank the indices from the newest date to the latest date with the newest data on the first line.
 
+Lines with one or both indices lack data need to be either deleted or populated with previous data point. 
+
 Blank lines after data need to be removed.
 
 The [indices.txt] needs to be at the same folder as [SimplePortfolioCalculator.java] file.
