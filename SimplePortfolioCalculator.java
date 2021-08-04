@@ -1,7 +1,7 @@
 /*
- * Date: 2021-8-1.
+ * Date: 2021-8-5.
  * File Name: SimplePortfolioCalculator.java
- * Version: 0.2
+ * Version: 0.3
  * Author: Weikang Ke
  */
 
@@ -81,7 +81,7 @@ public class SimplePortfolioCalculator {
             try {
                 Scanner in0 = new Scanner(System.in);
                 depositRate = in0.nextDouble();
-                System.out.println("deposite rate=" + depositRate);
+                //System.out.println("deposite rate=" + depositRate);
                 break;
             } catch (InputMismatchException e0) {
                 System.out.println("Non-numeric values are not allowed, Please  re enter");
@@ -116,12 +116,12 @@ public class SimplePortfolioCalculator {
             sosodB += sodB;
         }
         stdDevB = Math.sqrt(sosodB / (dateNum - 1)); //(dateNum -1) as n, and n by formula (population)
-        System.out.println("Std.Dev. of A =" + stdDevA + " Std.Dev. of B =" + stdDevB);
+        //System.out.println("Std.Dev. of A =" + stdDevA + " Std.Dev. of B =" + stdDevB);
 
         //Calculate sharpe ratio A and B
         double sharpeA = meanExcessReturnA / stdDevA;
         double sharpeB = meanExcessReturnB / stdDevB;
-        System.out.println("Sharpe ratio of A =" + sharpeA + " Sharpe ratio of B =" + sharpeB);
+        System.out.println("Sharpe ratio of A = " + String.format("%.3f", sharpeA) + " Sharpe ratio of B = " + String.format("%.3f", sharpeB));
 
         //Calculate covariance of Daily Excess Return of A and B
         double pod; //product of difference
@@ -133,19 +133,33 @@ public class SimplePortfolioCalculator {
             sopod += pod;
         }
         double covAB = sopod / (dateNum - 1); //(dateNum -1) as n, and n by formula (population)
-        System.out.println("Covariance of return = " + covAB);
+        //System.out.println("Covariance of return = " + covAB);
 
         //Calculate correlation coefficient of Daily Excess Return of A and B
         double corAB = 0;
         double varA = sosodA / (dateNum - 1);
         double varB = sosodB / (dateNum - 1);
         corAB = covAB / (stdDevA * stdDevB);
-        System.out.println("Correlation coefficient of return is =" + corAB);
+        System.out.println("Correlation coefficient of the two indices is = " + String.format("%.3f", corAB));
+        if (corAB >= 0.95) {
+            System.out.println("The value is very close to 1, it suggests that the two selected index has strong positive relations, other indices should be considered for diversification");
+        }
+        if (corAB < 0) {
+            System.out.println("The value is smaller than 0, it suggests that the two selected index has negative relationships, they are good for reducing risk");
+        }
+        if (corAB == 1) {
+            System.out.println("Why?");
+        }
+        if (corAB == 1) {
+            System.out.println("You are not getting anything out of this");
+        }
 
         //calculate Maximum Sharpe-ratio Portfolio
         double msWeightA = (meanExcessReturnA * varB - meanExcessReturnB * covAB) / (meanExcessReturnB * varA + meanExcessReturnA * varB - (meanExcessReturnA + meanExcessReturnB) * covAB);
         double msWeightB = 1 - msWeightA;
-        System.out.println("For Maximum Sharpe-ratio Portfolio, Weight of index A =" + msWeightA * 100 + "%" + " Weight of index B =" + msWeightB * 100 + "%");
+        double msReturn = msWeightA * dailyMeanReturnA + msWeightB * dailyMeanReturnB;
+        System.out.println("For Maximum Sharpe-ratio Portfolio: Weight of index A = [" + String.format("%.3f", msWeightA * 100) + "%]," + " Weight of index B = [" + String.format("%.3f", msWeightB * 100) + "%].");
+        System.out.println("With Maximum Sharpe-ratio Portfolio the estimated daily return is = [" + String.format("%.3f", msReturn * 100) + "%].");
 
         //Calculate Minimum Variance Portfolio
         double mvWeightA = (varB - covAB) / (varA + varB - 2 * covAB); //find local minimum
@@ -153,11 +167,14 @@ public class SimplePortfolioCalculator {
         double mvw1 = mvWeightA + 1;
         double ck0 = 2 * (varA * mvw0 - varB * (1 - mvw0) - 2 * covAB * mvw0 + covAB);
         double ck1 = 2 * (varA * mvw1 - varB * (1 - mvw1) - 2 * covAB * mvw1 + covAB);
+        double mvReturn = 0;
         if (ck0 < 0 && ck1 > 0) {
             double mvWeightB = 1 - mvWeightA;
-            System.out.println("For minimum Variance Portfolio (check with graph), Weight of index A =" + mvWeightA * 100 + "%" + " Weight of index B =" + mvWeightB * 100 + "%");
+            mvReturn = mvWeightA * dailyMeanReturnA + mvWeightB * dailyMeanReturnB;
+            System.out.println("For Minimum Variance Portfolio: Weight of index A = [" + String.format("%.3f", mvWeightA * 100) + "%]," + " Weight of index B = [" + String.format("%.3f", mvWeightB * 100) + "%].");
+            System.out.println("With Minimum Variance Portfolio the estimated daily return is = [" + String.format("%.3f", mvReturn * 100) + "%].");
         } else {
-            System.out.println("There is no minimum Variance Portfolio, please verify through graphes or check inputs");
+            System.out.println("!! There is no minimum Variance Portfolio, please verify through graphs or check inputs.");
         }
     }
 }
