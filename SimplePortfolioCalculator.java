@@ -1,7 +1,7 @@
 /*
  * Date: 2021-8-1.
- * File Name: Simple Portfolio Calculator.java
- * Version: 0.1
+ * File Name: SimplePortfolioCalculator.java
+ * Version: 0.2
  * Author: Weikang Ke
  */
 
@@ -42,11 +42,9 @@ public class SimplePortfolioCalculator {
             String line = inputStream0.nextLine(); // go the next line
         }
         inputStream0.close(); //close inputStream
-        /*System.out.println("Array length: " + indexData.length); //check the functioning of input method
-        for (int i = 0; i < dateNum; i++) {
-            System.out.println("line of index: " + i + " index A: " + indexData[0][i] + " index B: " + indexData[1][i]);
+        for (int i = 0; i < dateNum; i++) { //check the functioning of input method
+            System.out.println("Line: " + i + " index A: " + indexData[0][i] + " index B: " + indexData[1][i]);
         }
-         */
 
         //calculate daily return A and daily excess return B
         double[][] dailyReturn = new double[2][dateNum - 1]; //create daily return data array, length is shorter by 1 line due to the nature of calculation
@@ -118,7 +116,7 @@ public class SimplePortfolioCalculator {
             sosodB += sodB;
         }
         stdDevB = Math.sqrt(sosodB / (dateNum - 1)); //(dateNum -1) as n, and n by formula (population)
-        //System.out.println("Std.Dev. of A =" + stdDevA + " Std.Dev. of B =" + stdDevB);
+        System.out.println("Std.Dev. of A =" + stdDevA + " Std.Dev. of B =" + stdDevB);
 
         //Calculate sharpe ratio A and B
         double sharpeA = meanExcessReturnA / stdDevA;
@@ -135,14 +133,14 @@ public class SimplePortfolioCalculator {
             sopod += pod;
         }
         double covAB = sopod / (dateNum - 1); //(dateNum -1) as n, and n by formula (population)
-        //System.out.println("Covariance of return = " + covAB);
+        System.out.println("Covariance of return = " + covAB);
 
         //Calculate correlation coefficient of Daily Excess Return of A and B
         double corAB = 0;
         double varA = sosodA / (dateNum - 1);
         double varB = sosodB / (dateNum - 1);
-        corAB = covAB / (varA * varB);
-        //System.out.println("Correlation coefficient of return is =" + corAB);
+        corAB = covAB / (stdDevA * stdDevB);
+        System.out.println("Correlation coefficient of return is =" + corAB);
 
         //calculate Maximum Sharpe-ratio Portfolio
         double msWeightA = (meanExcessReturnA * varB - meanExcessReturnB * covAB) / (meanExcessReturnB * varA + meanExcessReturnA * varB - (meanExcessReturnA + meanExcessReturnB) * covAB);
