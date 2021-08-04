@@ -1,5 +1,6 @@
 # Simple-Portfolio-Calculator
-A program that calculates optimum portfolio for either maximizing return or minimizing risk. 
+
+This is a program that calculates optimum portfolio for either maximizing return or minimizing risk. 
 
 You need an txt file as input, file name is [indices.txt].
 
