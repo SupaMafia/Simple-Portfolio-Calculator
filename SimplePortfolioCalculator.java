@@ -1,7 +1,7 @@
 /*
- * Date: 2021-8-5.
+ * Date: 2021-8-7.
  * File Name: SimplePortfolioCalculator.java
- * Version: 0.3
+ * Version: 0.4
  * Author: Weikang Ke
  */
 
@@ -32,7 +32,7 @@ public class SimplePortfolioCalculator {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("Total number of date is: " + dateNum);
+        System.out.println("Total number of date is: [" + dateNum + "].");
         // read data into array: indexData
         double[][] indexData = new double[2][dateNum]; //create original data array
         for (int i = 0; i < dateNum; i++) { //takes data in indices into array
@@ -42,9 +42,12 @@ public class SimplePortfolioCalculator {
             String line = inputStream0.nextLine(); // go the next line
         }
         inputStream0.close(); //close inputStream
+        System.out.println("_________________________________________________________________________");
+        System.out.println("[Data Table]");
         for (int i = 0; i < dateNum; i++) { //check the functioning of input method
             System.out.println("Line: " + i + " index A: " + indexData[0][i] + " index B: " + indexData[1][i]);
         }
+        System.out.println("_________________________________________________________________________");
 
         //calculate daily return A and daily excess return B
         double[][] dailyReturn = new double[2][dateNum - 1]; //create daily return data array, length is shorter by 1 line due to the nature of calculation
@@ -121,7 +124,10 @@ public class SimplePortfolioCalculator {
         //Calculate sharpe ratio A and B
         double sharpeA = meanExcessReturnA / stdDevA;
         double sharpeB = meanExcessReturnB / stdDevB;
-        System.out.println("Sharpe ratio of A = " + String.format("%.3f", sharpeA) + " Sharpe ratio of B = " + String.format("%.3f", sharpeB));
+        System.out.println("_________________________________________________________________________");
+        System.out.println("    [Sharpe ratio]");
+        System.out.println("    Index A = [" + String.format("%.3f", sharpeA) + "]");
+        System.out.println("    Index B = [" + String.format("%.3f", sharpeB) + "]");
 
         //Calculate covariance of Daily Excess Return of A and B
         double pod; //product of difference
@@ -140,12 +146,14 @@ public class SimplePortfolioCalculator {
         double varA = sosodA / (dateNum - 1);
         double varB = sosodB / (dateNum - 1);
         corAB = covAB / (stdDevA * stdDevB);
-        System.out.println("Correlation coefficient of the two indices is = " + String.format("%.3f", corAB));
+        System.out.println("_________________________________________________________________________");
+        System.out.println("    [Correlation coefficient]");
+        System.out.println("    corAB = [" + String.format("%.3f", corAB) + "]");
         if (corAB >= 0.95) {
-            System.out.println("The value is very close to 1, it suggests that the two selected index has strong positive relations, other indices should be considered for diversification");
+            System.out.println("OBS! The value is very close to 1, it suggests that the two selected index has strong positive relations, other indices should be considered for diversification");
         }
         if (corAB < 0) {
-            System.out.println("The value is smaller than 0, it suggests that the two selected index has negative relationships, they are good for reducing risk");
+            System.out.println("OBS! The value is smaller than 0, it suggests that the two selected index has negative relationships, they are good for reducing risk");
         }
         if (corAB == 1) {
             System.out.println("Why?");
@@ -158,8 +166,12 @@ public class SimplePortfolioCalculator {
         double msWeightA = (meanExcessReturnA * varB - meanExcessReturnB * covAB) / (meanExcessReturnB * varA + meanExcessReturnA * varB - (meanExcessReturnA + meanExcessReturnB) * covAB);
         double msWeightB = 1 - msWeightA;
         double msReturn = msWeightA * dailyMeanReturnA + msWeightB * dailyMeanReturnB;
-        System.out.println("For Maximum Sharpe-ratio Portfolio: Weight of index A = [" + String.format("%.3f", msWeightA * 100) + "%]," + " Weight of index B = [" + String.format("%.3f", msWeightB * 100) + "%].");
-        System.out.println("With Maximum Sharpe-ratio Portfolio the estimated daily return is = [" + String.format("%.3f", msReturn * 100) + "%].");
+        System.out.println("_________________________________________________________________________");
+        System.out.println("    [Result]: ");
+        System.out.println("    [Maximum Sharpe-ratio Portfolio]");
+        System.out.println("    [Weight of index] A = [" + String.format("%.3f", msWeightA * 100) + "%]");
+        System.out.println("    [Weight of index] B = [" + String.format("%.3f", msWeightB * 100) + "%]");
+        System.out.println("    [Estimated daily return] = [" + String.format("%.3f", msReturn * 100) + "%]");
 
         //Calculate Minimum Variance Portfolio
         double mvWeightA = (varB - covAB) / (varA + varB - 2 * covAB); //find local minimum
@@ -171,10 +183,14 @@ public class SimplePortfolioCalculator {
         if (ck0 < 0 && ck1 > 0) {
             double mvWeightB = 1 - mvWeightA;
             mvReturn = mvWeightA * dailyMeanReturnA + mvWeightB * dailyMeanReturnB;
-            System.out.println("For Minimum Variance Portfolio: Weight of index A = [" + String.format("%.3f", mvWeightA * 100) + "%]," + " Weight of index B = [" + String.format("%.3f", mvWeightB * 100) + "%].");
-            System.out.println("With Minimum Variance Portfolio the estimated daily return is = [" + String.format("%.3f", mvReturn * 100) + "%].");
+            System.out.println("    _____________________________________    ");
+            System.out.println("    [Minimum Variance Portfolio]");
+            System.out.println("    [Weight of index] A = [" + String.format("%.3f", mvWeightA * 100) + "%]");
+            System.out.println("    [Weight of index] B = [" + String.format("%.3f", mvWeightB * 100) + "%]");
+            System.out.println("    [Estimated daily return] = [" + String.format("%.3f", mvReturn * 100) + "%]");
         } else {
-            System.out.println("!! There is no minimum Variance Portfolio, please verify through graphs or check inputs.");
+            System.out.println("OBS!! There is no minimum Variance Portfolio, please verify through graphs or check inputs.");
         }
+        System.out.println("_________________________________________________________________________");
     }
 }
