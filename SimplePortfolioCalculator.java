@@ -1,7 +1,7 @@
 /*
- * Date: 2021-8-7.
+ * Date: 2021-8-12.
  * File Name: SimplePortfolioCalculator.java
- * Version: 0.4
+ * Version: 0.5
  * Author: Weikang Ke
  */
 
@@ -152,12 +152,6 @@ public class SimplePortfolioCalculator {
         if (corAB >= 0.95) {
             System.out.println("OBS! The value is very close to 1, it suggests that the two selected index has strong positive relations, other indices should be considered for diversification");
         }
-        if (corAB < 0) {
-            System.out.println("OBS! The value is smaller than 0, it suggests that the two selected index has negative relationships, they are good for reducing risk");
-        }
-        if (corAB == 1) {
-            System.out.println("Why?");
-        }
         if (corAB == 1) {
             System.out.println("You are not getting anything out of this");
         }
@@ -180,8 +174,8 @@ public class SimplePortfolioCalculator {
         double ck0 = 2 * (varA * mvw0 - varB * (1 - mvw0) - 2 * covAB * mvw0 + covAB);
         double ck1 = 2 * (varA * mvw1 - varB * (1 - mvw1) - 2 * covAB * mvw1 + covAB);
         double mvReturn = 0;
+        double mvWeightB = 1 - mvWeightA;
         if (ck0 < 0 && ck1 > 0) {
-            double mvWeightB = 1 - mvWeightA;
             mvReturn = mvWeightA * dailyMeanReturnA + mvWeightB * dailyMeanReturnB;
             System.out.println("    _____________________________________    ");
             System.out.println("    [Minimum Variance Portfolio]");
@@ -191,6 +185,73 @@ public class SimplePortfolioCalculator {
         } else {
             System.out.println("OBS!! There is no minimum Variance Portfolio, please verify through graphs or check inputs.");
         }
+        System.out.println("_________________________________________________________________________");
+
+        //continue to calculate exact amount
+        System.out.println("Dou you want to calculate the amount to invest? (y or n)");
+        String contCal = null;
+        boolean bcontCal = false;
+        int count1 = 0;
+        do {
+            try {
+                Scanner in2 = new Scanner(System.in);
+                contCal = in2.next();
+                if (!contCal.equals("y") && !contCal.equals("n")) {
+                    throw new IllegalArgumentException("input needs to be y or n");
+                }
+                if (contCal.equals("y")) {
+                    bcontCal = true;
+                } else if (contCal.equals("n")) {
+                    bcontCal = false;
+                }
+                break;
+            } catch (InputMismatchException e2) {
+                System.out.println("please input y or n, re enter:");
+            } catch (IllegalArgumentException e2) {
+                System.out.println("please input y or n, re enter:");
+            } finally {
+                count1++;
+                if (count1 == 10) {
+                    System.out.println("Too many mis inputs");
+                    System.exit(0);
+                }
+            }
+        } while (count1 > 0);
+        if (!bcontCal) {
+            System.exit(0);
+        }
+        System.out.println("What is total amount to be invested?");
+        double totFund = 0;
+        int count0 = 0;
+        do {
+            try {
+                Scanner in1 = new Scanner(System.in);
+                totFund = in1.nextInt();
+                break;
+            } catch (InputMismatchException e1) {
+                System.out.println("Non-numeric values are not allowed, please re enter");
+            } finally {
+                count0++;
+                if (count0 == 10) {
+                    System.out.println("Too many misinputs");
+                    System.exit(0);
+                }
+            }
+        } while (count0 > 0);
+        double mspTotA, mspTotB, mvpTotA, mvpTotB;
+        mspTotA = msWeightA * totFund;
+        mspTotB = msWeightB * totFund;
+        mvpTotA = mvWeightA * totFund;
+        mvpTotB = mvWeightB * totFund;
+        System.out.println("_________________________________________________________________________");
+        System.out.println("    [Amount to invest]");
+        System.out.println("    [Maximum Sharpe-Ratio Portfolio]");
+        System.out.println("    [Amount] A = [" + String.format("%.3f", mspTotA) + "]");
+        System.out.println("    [Amount] B = [" + String.format("%.3f", mspTotB) + "]");
+        System.out.println("    _____________________________________    ");
+        System.out.println("    [Minimum Variance Portfolio]");
+        System.out.println("    [Amount] A = [" + String.format("%.3f", mvpTotA) + "]");
+        System.out.println("    [Amount] B = [" + String.format("%.3f", mvpTotB) + "]");
         System.out.println("_________________________________________________________________________");
     }
 }
